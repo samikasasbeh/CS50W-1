@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from markdown2 import Markdown
 from . import util
 
 
@@ -9,6 +9,7 @@ def index(request):
     })
 
 def entry(request, entry):
+    markdowner=Markdown()
     entrypage= util.get_entry(entry)
     if entrypage is None:
         return render(request, "ecnyclopedia/nonExistingEntry.html", {
@@ -16,6 +17,6 @@ def entry(request, entry):
         })
     else:
         return render(request,"encyclopedia/entry.html", {
-            "entry": entrypage,
+            "entry": markdowner.convert(entrypage),
             "entryTitle":entry
         })
