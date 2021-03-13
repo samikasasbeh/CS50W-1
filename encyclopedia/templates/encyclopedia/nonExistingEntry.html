@@ -1,0 +1,10 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+ {{entryTitle}}
+{% endblock %}
+
+{% block body %}
+    <h1>{{entryTitle}}</h1>
+    <p>We are sorry the subject you are looking for {{entryTitle}} was not found.</p>
+{% endblock %}

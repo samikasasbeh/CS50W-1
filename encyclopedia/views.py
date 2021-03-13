@@ -12,7 +12,7 @@ def entry(request, entry):
     markdowner=Markdown()
     entrypage= util.get_entry(entry)
     if entrypage is None:
-        return render(request, "ecnyclopedia/nonExistingEntry.html", {
+        return render(request, "encyclopedia/nonExistingEntry.html", {
             "entryTitle": entry
         })
     else:
