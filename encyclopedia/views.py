@@ -4,8 +4,8 @@ from . import util
 from django import forms
 
 #adding to create a form in search to manipulate
-class searchForm(forms.Form):
-    query = forms.CharField(max_length=100)
+class SearchForm(forms.Form):
+    query = forms.CharField(label="Search here")
 
 #Default landing page view
 def index(request):
@@ -27,4 +27,24 @@ def entry(request, entry):
         })
 
 # to view the pages the user searched for 
-def search(request)
+def search(request):
+    if request.method == 'POST':
+        form = searchForm(request.POST)
+        if form.is_valid():
+            dataentry = form.cleaned_data["query"]
+            for entry in util.list_entries():
+                if dataentry == entry:
+                    content = util.get_entry(dataentry)
+                    ispresent = True
+
+            if ispresent:
+                markdowner = Markdown()
+                return render(request, "encyclopedia/entry.html",{
+                    'content': markdowner.convert(content),
+                    "form": form,
+                    'entryTitle': data
+                })
+
+    return render(request, "encyclopedia/entry.html",{
+        "form": SearchForm()
+    })       
