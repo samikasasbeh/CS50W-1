@@ -2,6 +2,8 @@ from django.shortcuts import render
 from markdown2 import Markdown
 from . import util
 from django import forms
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 #adding to create a form in search to manipulate
 class SearchForm(forms.Form):
@@ -32,11 +34,14 @@ def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-            dataentry = form.cleaned_data["query"]
-            for entry in util.list_entries():
-                if dataentry == entry:
-                    content = util.get_entry(dataentry)
-                    ispresent = True
+            #getting the Data entered in the search bar
+            dataentred = form.cleaned_data["query"]
+            entries = util.list_entries()
+            for entry in entries:
+                if dataentred.lower() == entry.lower():
+                    title = entry
+                    entry = util.get_entry(title)
+                    return HttpResponseRedirect(reverse("encyclopedia:entry", args=[title]))
 
             if ispresent:
                 markdowner = Markdown()
