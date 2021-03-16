@@ -5,7 +5,8 @@ from django import forms
 
 #adding to create a form in search to manipulate
 class SearchForm(forms.Form):
-    query = forms.CharField(label="Search here")
+    query = forms.CharField(label="",
+        widget=forms.TextInput(attrs={'placeholder':'Search Wiki'}))
 
 #Default landing page view
 def index(request):
@@ -29,7 +30,7 @@ def entry(request, entry):
 # to view the pages the user searched for 
 def search(request):
     if request.method == 'POST':
-        form = searchForm(request.POST)
+        form = SearchForm(request.POST)
         if form.is_valid():
             dataentry = form.cleaned_data["query"]
             for entry in util.list_entries():
@@ -45,6 +46,6 @@ def search(request):
                     'entryTitle': data
                 })
 
-    return render(request, "encyclopedia/entry.html",{
+    return render(request, "encyclopedia/index.html",{
         "form": SearchForm()
     })       
