@@ -13,7 +13,8 @@ class SearchForm(forms.Form):
 #Default landing page view
 def index(request):
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "entries": util.list_entries(),
+        "form": SearchForm()
     })
 #view to show a specific page the user search in url
 def entry(request, entry):
@@ -21,17 +22,20 @@ def entry(request, entry):
     entrypage= util.get_entry(entry)
     if entrypage is None:
         return render(request, "encyclopedia/nonExistingEntry.html", {
-            "entryTitle": entry
+            "entryTitle": entry,
+            "form":SearchForm()
         })
     else:
         return render(request,"encyclopedia/entry.html", {
             "entry": markdowner.convert(entrypage),
-            "entryTitle":entry
+            "entryTitle":entry,
+            "form": SearchForm()
         })
 
 # to view the pages the user searched for 
 def search(request):
     if request.method == 'POST':
+        entries_found= []
         form = SearchForm(request.POST)
         if form.is_valid():
             #getting the Data entered in the search bar
@@ -42,15 +46,12 @@ def search(request):
                     title = entry
                     entry = util.get_entry(title)
                     return HttpResponseRedirect(reverse("encyclopedia:entry", args=[title]))
+                
+                if dataentred.lower() in entry.lower():
+                    entries_found.append(entry)
 
-            if ispresent:
-                markdowner = Markdown()
-                return render(request, "encyclopedia/entry.html",{
-                    'content': markdowner.convert(content),
-                    "form": form,
-                    'entryTitle': data
-                })
+        
 
     return render(request, "encyclopedia/index.html",{
         "form": SearchForm()
-    })       
+    })
