@@ -50,10 +50,16 @@ def search(request):
                 if dataentred.lower() in entry.lower():
                     entries_found.append(entry)
                 
+                #if dataentred.lower() not in entry.lower():
+                   # return render(request , "encyclopedia/nonExistingEntry.html", {
+                        #"entryTitle": dataentred,
+                        #"form": SearchForm
+                    #})
             return render(request, "encyclopedia/index.html", {
             "entries2": entries_found,
             "search":True,
-            "value":dataentred
+            "value":dataentred,
+            "form": SearchForm()
             
         })
 
