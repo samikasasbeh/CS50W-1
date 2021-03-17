@@ -12,9 +12,16 @@
     <h1>All Pages</h1>
 
     <ul>
+        
         {% for entry in entries %}
             <li><a href="/wiki/{{entry}}">{{ entry }}</a href={""}></li>
         {% endfor %}
+
+        {% if search == True %}
+        {% for entry in entries2 %}
+            <li><a href="/wiki/{{entry}}">{{ entries2 }}</a href={""}></li>
+        {% endfor %}
+        {% endif %}
     </ul>
 
 {% endblock %}

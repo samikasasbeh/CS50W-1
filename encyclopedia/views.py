@@ -49,6 +49,13 @@ def search(request):
                 
                 if dataentred.lower() in entry.lower():
                     entries_found.append(entry)
+                
+            return render(request, "encyclopedia/index.html", {
+            "entries2": entries_found,
+            "search":True,
+            "value":dataentred
+            
+        })
 
         
 
