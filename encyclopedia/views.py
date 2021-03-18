@@ -10,6 +10,9 @@ class SearchForm(forms.Form):
     query = forms.CharField(label="",
         widget=forms.TextInput(attrs={'placeholder':'Search Wiki'}))
 
+class AddNewPage(forms.Form):
+    title = froms.CharField()
+    content = comment= forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20})
 #Default landing page view
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -64,7 +67,6 @@ def search(request):
         })
 
         
-
-    return render(request, "encyclopedia/index.html",{
-        "form": SearchForm()
-    })
+def create(request):
+    if request.method == 'POST':
+        
