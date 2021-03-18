@@ -3,7 +3,7 @@ from markdown2 import Markdown
 from . import util
 from django import forms
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 #adding to create a form in search to manipulate
 class SearchForm(forms.Form):
@@ -11,9 +11,11 @@ class SearchForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder':'Search Wiki'}))
 
 class AddNewPage(forms.Form):
-    title = froms.CharField(),
-    content = comment= forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20})
+    title = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Enter title', 'id': 'new-entry-title'}))
+    content = forms.CharField(label= "", widget=forms.Textarea(attrs={'size': 50, 'placeholder': 'Enter your content', 'id': 'new-entry-content', 'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
 #Default landing page view
+
+
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
@@ -80,9 +82,12 @@ def create(request):
                 if entry.lower() == available_entries.lower():
                     return render(request, "encyclopedia/createnew.html",{
                         "form": SearchForm(),
-                        "addNewPage:" AddNewPage(),
+                        "addNewPage": AddNewPage(),
                         "error_message": "The entry you are trying to create already exists"
                     })
 
-
+    return render(request, "encyclopedia/createnew.html", {
+        "form": SearchForm(),
+        "addNewPage": AddNewPage()
+    } )
         

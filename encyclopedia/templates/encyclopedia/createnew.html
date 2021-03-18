@@ -2,15 +2,18 @@
 
 
 {%  block title %}
-    <form action="{% url 'encyclopedia:create'%}" method="POST">
-        {% csrf_token %}
-        {{}}
-    </form>
+   Wiki
 {% endblock %}
 
 {% block body %}
+<h1>Create A Wiki Page</h1>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
 <form action="{% url 'encyclopedia:create' %}" method="POST">
     {% csrf_token %}
-    {{}}
+    {{ addNewPage }}
+    <br/>
+    <input type="submit">
 </form>
 {% endblock %}
