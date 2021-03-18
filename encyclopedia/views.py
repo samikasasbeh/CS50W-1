@@ -11,7 +11,7 @@ class SearchForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder':'Search Wiki'}))
 
 class AddNewPage(forms.Form):
-    title = froms.CharField()
+    title = froms.CharField(),
     content = comment= forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20})
 #Default landing page view
 def index(request):
@@ -69,4 +69,20 @@ def search(request):
         
 def create(request):
     if request.method == 'POST':
+        newentry = AddNewPage(request.POST)
+
+        if newentry.is_valid():
+            title = newentry.cleaned_data['title']
+            content = newentry.cleaned_data['content']
+            # list of available entries
+            available_entries = util.list_entries()
+            for entry in available_entries:
+                if entry.lower() == available_entries.lower():
+                    return render(request, "encyclopedia/createnew.html",{
+                        "form": SearchForm(),
+                        "addNewPage:" AddNewPage(),
+                        "error_message": "The entry you are trying to create already exists"
+                    })
+
+
         
