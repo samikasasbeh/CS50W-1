@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block body %}
-<h1>Create A Wiki Page</h1>
-{% if error %}
-    <p style="color: red;">{{ error }}</p>
+<h1>Create A New Wiki Page</h1>
+{% if errormessage %}
+    <p style="color: red">{{ errormessage }}</p>
 {% endif %}
 <form action="{% url 'encyclopedia:create' %}" method="POST">
     {% csrf_token %}

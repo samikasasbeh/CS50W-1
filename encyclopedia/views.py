@@ -83,7 +83,7 @@ def create(request):
                     return render(request, "encyclopedia/createnew.html",{
                         "form": SearchForm(),
                         "addNewPage": AddNewPage(),
-                        "error_message": "The entry you are trying to create already exists"
+                        "errormessage": "The wiki page you are trying to create already exists..."
                     })
             #adding mark down to entered data
             newentrytitle = '#' + title
@@ -93,8 +93,8 @@ def create(request):
             util.save_entry(title, all_entered_content)
             entry = util.get_entry(title)
             return render(request, "encyclopedia/entry.html",{
-                "entryTitle" : title,
-                "entry": entry,
+                "entryTitle" : newentrytitle,
+                "entry": newentrybody,
                 "form":SearchForm()
             })
 
