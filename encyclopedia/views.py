@@ -79,12 +79,24 @@ def create(request):
             # list of available entries
             available_entries = util.list_entries()
             for entry in available_entries:
-                if entry.lower() == available_entries.lower():
+                if entry.lower() == title.lower():
                     return render(request, "encyclopedia/createnew.html",{
                         "form": SearchForm(),
                         "addNewPage": AddNewPage(),
                         "error_message": "The entry you are trying to create already exists"
                     })
+            #adding mark down to entered data
+            newentrytitle = '#' + title
+            newentrybody = "\n" + content
+
+            all_entered_content = newentrytitle + newentrybody
+            util.save_entry(title, all_entered_content)
+            entry = util.get_entry(title)
+            return render(request, "encyclopedia/entry.html",{
+                "entryTitle" : title,
+                "entry": entry,
+                "form":SearchForm()
+            })
 
     return render(request, "encyclopedia/createnew.html", {
         "form": SearchForm(),
