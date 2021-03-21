@@ -17,11 +17,8 @@ class AddNewPage(forms.Form):
     content = forms.CharField(label= "", widget=forms.Textarea(attrs={'size': 50, 'placeholder': 'Enter your content', 'id': 'new-entry-content', 'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
 
 class EditPageFields(forms.Form):
-   title = froms.CharField(label="",
-        widget=forms.TextInput(attrs={'id': 'edit-entry-title'}))
-    content = forms.CharField(label="",
-        widget=forms.Textarea(attrs={'id': 'edit-entry-content',
-                'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
+    title = forms.CharField(label="", widget=forms.TextInput(attrs={'id': 'edit-entry-title'}))
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={'id': 'edit-entry-content','style':'display:flex; width:80%; height:40%; margin-top:15px;'}))
 #function for the index page
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -118,17 +115,23 @@ def create(request):
         "addNewPage": AddNewPage()
     } )
 
-def edit(request, title):
+def edit(request, entry):
     if request.method == "POST":
-        entry = util.get_entry(title)
-        editpage = EditPageFields(initial={'title': title, 'content': entry})
-
-        return render(request, 'encyclopedia/edit.html'{
-            'form': SearchForm(),
+        entrypage = util.get_entry(entry)
+        editpage = EditPageFields(initial={'title': entry, 'content': entrypage})
+        return render(request, "encyclopedia/edit.html", {
+            "form": SearchForm(),
             "editEntry": editpage,
-            "entry":entry,
-            'title': title
+            "entry": entrypage,
+            "title": entry
+
+    
         })
+
+    return render(request, "encyclopedia/edit.html", {
+            "form": SearchForm(),
+            "editEntry": EditPageFields()
+    })
         
 
         

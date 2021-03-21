@@ -6,4 +6,8 @@
 
 {% block body %}
     {{entry|safe}}
+    <form action ="{% url 'encyclopedia:edit' entryTitle %}">
+        <button>Edit Wiki Page</button>
+        
+    </form>
 {% endblock %}
