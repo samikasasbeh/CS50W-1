@@ -15,8 +15,13 @@ class SearchForm(forms.Form):
 class AddNewPage(forms.Form):
     title = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Enter title', 'id': 'new-entry-title'}))
     content = forms.CharField(label= "", widget=forms.Textarea(attrs={'size': 50, 'placeholder': 'Enter your content', 'id': 'new-entry-content', 'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
-#Default landing page view
 
+class EditPageFields(forms.Form):
+   title = froms.CharField(label="",
+        widget=forms.TextInput(attrs={'id': 'edit-entry-title'}))
+    content = forms.CharField(label="",
+        widget=forms.Textarea(attrs={'id': 'edit-entry-content',
+                'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
 #function for the index page
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -112,4 +117,11 @@ def create(request):
         "form": SearchForm(),
         "addNewPage": AddNewPage()
     } )
+
+def edit(request):
+    if request.method == "POST":
+        btnform = Editbttn(request.POST)
+        if form.is_valid():
+            valbtn = btnform.cleaned_data['btn']
+
         
