@@ -129,8 +129,15 @@ def edit(request, entry):
             "title": entry
         })
     
-    
-        
-#
+def submiteditedentry(request, entry):
+    if request.method == 'POST':
+        #get the edited entered data
+        edited_post = EditPageFields(request.POST)
+        if edited_post.is_valid():
+            #get the newely edited valueds both the title and content
+            title = edited_post.cleaned_data['title']
+            content = edited_post.cleaned_data['content']
+            
+            
 
         
