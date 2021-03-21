@@ -6,8 +6,8 @@
 
 {% block body %}
     {{entry|safe}}
-    <form action ="{% url 'encyclopedia:edit' entryTitle %}">
+    <form action ="{% url 'encyclopedia:edit' entryTitle %}" method="POST">
         <button>Edit Wiki Page</button>
-        
+        {% csrf_token %}
     </form>
 {% endblock %}

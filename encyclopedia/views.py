@@ -117,21 +117,20 @@ def create(request):
 
 def edit(request, entry):
     if request.method == "POST":
+        # Get data for the entry so it can be edited
         entrypage = util.get_entry(entry)
+
         editpage = EditPageFields(initial={'title': entry, 'content': entrypage})
+
         return render(request, "encyclopedia/edit.html", {
             "form": SearchForm(),
             "editEntry": editpage,
             "entry": entrypage,
             "title": entry
-
-    
         })
-
-    return render(request, "encyclopedia/edit.html", {
-            "form": SearchForm(),
-            "editEntry": EditPageFields()
-    })
+    
+    
         
+#
 
         
