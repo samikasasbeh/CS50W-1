@@ -118,10 +118,17 @@ def create(request):
         "addNewPage": AddNewPage()
     } )
 
-def edit(request):
+def edit(request, title):
     if request.method == "POST":
-        btnform = Editbttn(request.POST)
-        if form.is_valid():
-            valbtn = btnform.cleaned_data['btn']
+        entry = util.get_entry(title)
+        editpage = EditPageFields(initial={'title': title, 'content': entry})
+
+        return render(request, 'encyclopedia/edit.html'{
+            'form': SearchForm(),
+            "editEntry": editpage,
+            "entry":entry,
+            'title': title
+        })
+        
 
         
