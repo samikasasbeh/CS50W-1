@@ -116,6 +116,7 @@ def create(request):
     } )
 
 def edit(request, entry):
+    
     if request.method == "POST":
         # Get data for the entry so it can be edited
         entrypage = util.get_entry(entry)
@@ -129,14 +130,16 @@ def edit(request, entry):
             "title": entry
         })
     
-def submiteditedentry(request, entry):
+def submitEntry(request, entry):
     if request.method == 'POST':
+        markdowner=Markdown()
         #get the edited entered data
         edited_post = EditPageFields(request.POST)
         if edited_post.is_valid():
             #get the newely edited valueds both the title and content
             edited_title = edited_post.cleaned_data['title']
             edited_content = edited_post.cleaned_data['content']
+            
 
             if edited_title != entry:
                 #using f string to find the entry and if found store it in a variable
@@ -144,16 +147,16 @@ def submiteditedentry(request, entry):
                 if default_storage.exist(filename):
                     default_storage.delete(filename)
 
-                util.save_entry(edited_title, edited_content)
 
-                newedited_entry = util.get_entry(edited_title)
-
-                return render(request, "encyclopedia/entry.html",{
-                    "form":SearchForm(),
-                    "title":edited_title,
-                    "msg_success": "Wiki Page was Successfully updated",
-                    "entry":markdowner.convert(newedited_entry)
-                })
+            util.save_entry(edited_title, edited_content)
+            edited_entry = util.get_entry(edited_title)        
+        return render(request, "encyclopedia/entry.html",{
+                "title":edited_title,
+                "entry": markdowner.convert(edited_entry),
+                "form":SearchForm(),            
+                "msg_success": "Wiki Page was Successfully updated"
+                })           
+    
             
             
 

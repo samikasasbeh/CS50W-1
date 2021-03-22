@@ -5,8 +5,11 @@
 {% endblock%}
 
 {% block body %}
+    {% if msg_success %}
+        <p style="color: green;">{{ msg_success }}</p>
+    {% endif %}
     {{entry|safe}}
-    <form action ="{% url 'encyclopedia:edit' entryTitle %}" method="POST">
+    <form action ="{% url 'encyclopedia:edit' title %}" method="POST">
         <button>Edit Wiki Page</button>
         {% csrf_token %}
     </form>
