@@ -136,20 +136,22 @@ def submitEntry(request, entry):
         #get the edited entered data
         edited_post = EditPageFields(request.POST)
         if edited_post.is_valid():
-            #get the newely edited valueds both the title and content
+            #get the newely edited values both the title and content
             edited_title = edited_post.cleaned_data['title']
             edited_content = edited_post.cleaned_data['content']
             
-
+            # if the changed title is not the same as before
             if edited_title != entry:
                 #using f string to find the entry and if found store it in a variable
                 filename = f"entries/{entry}.md"
+                #Find it then delete it
                 if default_storage.exist(filename):
                     default_storage.delete(filename)
 
-
+            #save the newley entered edited entries
             util.save_entry(edited_title, edited_content)
-            edited_entry = util.get_entry(edited_title)        
+            edited_entry = util.get_entry(edited_title)   
+          #after it has been saved and edited display it in the entries       
         return render(request, "encyclopedia/entry.html",{
                 "title":edited_title,
                 "entry": markdowner.convert(edited_entry),
@@ -157,7 +159,9 @@ def submitEntry(request, entry):
                 "msg_success": "Wiki Page was Successfully updated"
                 })           
     
-            
+ #The random function
+ def random(request):
+                
             
 
         
