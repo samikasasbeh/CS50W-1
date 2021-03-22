@@ -34,14 +34,14 @@ def entry(request, entry):
     #if it is non existent redirect to error page html
     if entrypage is None:
         return render(request, "encyclopedia/nonExistingEntry.html", {
-            "entryTitle": entry,
+            "title": entry,
             "form":SearchForm()
         })
         # if it is existent redirect the user to the  entry page
     else:
         return render(request,"encyclopedia/entry.html", {
             "entry": markdowner.convert(entrypage),
-            "entryTitle":entry,
+            "title":entry,
             "form": SearchForm()
         })
 
