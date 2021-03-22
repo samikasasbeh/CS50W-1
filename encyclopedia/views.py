@@ -135,8 +135,25 @@ def submiteditedentry(request, entry):
         edited_post = EditPageFields(request.POST)
         if edited_post.is_valid():
             #get the newely edited valueds both the title and content
-            title = edited_post.cleaned_data['title']
-            content = edited_post.cleaned_data['content']
+            edited_title = edited_post.cleaned_data['title']
+            edited_content = edited_post.cleaned_data['content']
+
+            if edited_title != entry:
+                #using f string to find the entry and if found store it in a variable
+                filename = f"entries/{entry}.md"
+                if default_storage.exist(filename):
+                    default_storage.delete(filename)
+
+                util.save_entry(edited_title, edited_content)
+
+                newedited_entry = util.get_entry(edited_title)
+
+                return render(request, "encyclopedia/entry.html",{
+                    "form":SearchForm(),
+                    "title":edited_title,
+                    "msg_success": "Wiki Page was Successfully updated",
+                    "entry":markdowner.convert(newedited_entry)
+                })
             
             
 
