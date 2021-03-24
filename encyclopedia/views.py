@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from random import choice
 from markdown2 import Markdown
 from . import util
 from django import forms
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+import secrets
 
 #adding a class to create a form text input instead of manually setting input field
 class SearchForm(forms.Form):
@@ -162,9 +164,9 @@ def submitEntry(request, entry):
  #The random function
 def random(request):
     entries = util.list_entries()
-    random_entry = random.choice(entries)
-    entry= util.get_entry(random_entry)
-    return HttpResponseRedirect(reverse("entry", args=[random_entry]))
+    title = secrets.choice(entries)
+    entry = util.get_entry(title)
+    return HttpResponseRedirect(reverse("encyclopedia:entry", args=[title]))
 
                 
             
