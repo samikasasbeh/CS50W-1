@@ -15,7 +15,7 @@ class SearchForm(forms.Form):
 class AddNewPage(forms.Form):
     title = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Enter title', 'id': 'new-entry-title'}))
     content = forms.CharField(label= "", widget=forms.Textarea(attrs={'size': 50, 'placeholder': 'Enter your content', 'id': 'new-entry-content', 'style': 'display:flex; width:80%; height:40%; margin-top:15px;' }))
-
+#adding a class  
 class EditPageFields(forms.Form):
     title = forms.CharField(label="", widget=forms.TextInput(attrs={'id': 'edit-entry-title'}))
     content = forms.CharField(label="", widget=forms.Textarea(attrs={'id': 'edit-entry-content','style':'display:flex; width:80%; height:40%; margin-top:15px;'}))
@@ -161,6 +161,11 @@ def submitEntry(request, entry):
     
  #The random function
  def random(request):
+     entries = util.list_entries()
+     random_entry = random.choice(entries)
+     entry= util.get_entry(random_entry)
+     return HttpResponseRedirect(reverse())
+
                 
             
 
