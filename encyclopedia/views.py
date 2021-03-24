@@ -160,11 +160,11 @@ def submitEntry(request, entry):
                 })           
     
  #The random function
- def random(request):
-     entries = util.list_entries()
-     random_entry = random.choice(entries)
-     entry= util.get_entry(random_entry)
-     return HttpResponseRedirect(reverse())
+def random(request):
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+    entry= util.get_entry(random_entry)
+    return HttpResponseRedirect(reverse("entry", args=[random_entry]))
 
                 
             
