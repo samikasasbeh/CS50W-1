@@ -163,12 +163,16 @@ def submitEntry(request, entry):
     
  #The random function
 def random(request):
+    #get all the entries 
     entries = util.list_entries()
+    # randomly select an entry using secrets 
     title = secrets.choice(entries)
+    # get the normal entry
     entry = util.get_entry(title)
+    #redirect to the entry page
     return HttpResponseRedirect(reverse("encyclopedia:entry", args=[title]))
 
                 
-            
+ 
 
         
